@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # Try a command forever.
+# The script expects two parameters:
+# 1. the command to execute
+# 2. optionally, a path to use as blueprint for per-execution log files
 
 # strict error handling
 set -o pipefail  # trace ERR through pipes
