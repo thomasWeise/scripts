@@ -6,8 +6,7 @@ on:
       - main
 
 jobs:
-
-  build_python_3_12:
+  deploy_scripts:
     runs-on: ubuntu-latest
     steps:
 # check out the github repository
