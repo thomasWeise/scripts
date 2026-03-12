@@ -1,0 +1,27 @@
+name: main build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build_python_3_12:
+    runs-on: ubuntu-latest
+    steps:
+# check out the github repository
+    - uses: actions/checkout@v4.1.6
+# clean-up
+    - name: clean up
+      run: |
+        rm -rf *.md
+        rm -f .gitignore
+        rm -rf .github
+# deploy to github pages
+    - name: deploy scripts
+      uses: JamesIves/github-pages-deploy-action@65b5dfd4f5bcd3a7403bbc2959c144256167464e
+      with:
+        branch: gh-pages
+        folder: /home/runner/work/scripts/scripts/
+        single-commit: true
