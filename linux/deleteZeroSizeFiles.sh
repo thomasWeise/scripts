@@ -9,8 +9,7 @@ set -o errexit   # set -e : exit the script if any statement returns a non-true 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Deleting all empty files in current directory recursively."
 find . -type f -empty -delete
 
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Deleting all empty directories in current directory recurisvely."
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Deleting all empty directories in current directory recursively."
 find . -type d -empty -delete
 
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished cleaning up."
-
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished cleaning up empty files and directories."

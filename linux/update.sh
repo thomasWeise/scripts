@@ -8,7 +8,6 @@ set -o errexit   # set -e : exit the script if any statement returns a non-true 
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The update script has started."
 
-
 cd /tmp/  # Just to be on the save side.
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Clearing caches and locks by force."
@@ -19,7 +18,7 @@ sudo rm -rf "/var/lib/dpkg/lock" || true
 # updating the system
 for i in {1..4}; do
 	echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now doing apt-get updates in run ${i}."
-    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Cleaning caches (1)."
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Cleaning caches (1)."
 	sudo apt-get -y clean
 	sleep 1
 	echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Cleaning caches (2)."
