@@ -7,9 +7,9 @@ set -o nounset   # set -u : exit the script if you try to use an uninitialized v
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Deleting all empty files in current directory recursively."
-find . -type f -empty -delete
+find . -type f -empty -delete -print
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Deleting all empty directories in current directory recursively."
-find . -type d -empty -delete
+find . -type d -empty -delete -print
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished cleaning up empty files and directories."
