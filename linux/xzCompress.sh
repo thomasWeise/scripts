@@ -11,10 +11,10 @@
 #    Then, an archive with name 'X.tar.xz' is created and the contents of 'X'
 #    are packaged into it.
 #
-# 2. With multiple parameters 'A', 'B', 'C', and so on.
-#    Then, an archive with name 'A.tar.xz' is created and the contents of 'B',
-#    'C', and so on are packaged into it.
-#    'A' is treated solely as archive name, not as source.
+# 2. With multiple parameters 'Y', 'A', 'B', 'C', and so on.
+#    Then, an archive with name 'Y.tar.xz' is created and the contents of 'A',
+#    'B', and 'C', and so on are packaged into it.
+#    'Y' is treated solely as archive name, not as source.
 #
 # This script may take a lot of memory and time.
 # If you have N logical CPU cores, this script attempts to use
