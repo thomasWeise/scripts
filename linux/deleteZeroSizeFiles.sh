@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script deletes empty files (= files with size 0) an empty directories
+# in the current directory recursively.
+
 # Turn on strict error handling, so that the script fails as soon as something goes wrong.
 set -o pipefail  # trace ERR through pipes
 set -o errtrace  # trace ERR through 'time command' and other functions

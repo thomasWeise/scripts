@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script attempts all sorts of update approaches.
+# The goal is to update all packages, including apt-get as well as snaps.
+
 # Fail on error.
 set -o pipefail  # trace ERR through pipes
 set -o errtrace  # trace ERR through 'time command' and other functions

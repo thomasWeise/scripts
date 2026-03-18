@@ -1,5 +1,8 @@
 #!/bin/bash -
 
+# This script downloads the URLs provided as arguments in the current directory.
+# Parameters: An arbitrary number of URLs to download
+
 # strict error handling
 set -o pipefail  # trace ERR through pipes
 set -o errtrace  # trace ERR through 'time command' and other functions
