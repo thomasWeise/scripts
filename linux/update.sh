@@ -2,6 +2,7 @@
 
 # This script attempts all sorts of update approaches.
 # The goal is to update all packages, including apt-get as well as snaps.
+# This is something you could run before shutting down the computer.
 
 # Fail on error.
 set -o pipefail  # trace ERR through pipes
@@ -11,7 +12,7 @@ set -o errexit   # set -e : exit the script if any statement returns a non-true 
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The update script has started."
 
-cd /tmp/  # Just to be on the save side.
+cd /tmp/  # Just to be on the safe side.
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Clearing caches and locks by force."
 sudo rm -rf "/var/lib/apt/lists/lock" || true
