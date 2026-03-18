@@ -32,15 +32,15 @@ dest="$(basename "$dest").tar.xz"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination archive name is '$dest'."
 
 if command -v nproc &> /dev/null; then
-  nthreads="$(nproc --all)"
-  nthreads="$((nthreads - 1))"
-  nthreads="$((nthreads / 2))"
-  nthreads="$((nthreads - 1))"
-  if [ $nthreads -le 1 ]; then
-    nthreads=1
-  fi
+    nthreads="$(nproc --all)"
+    nthreads="$((nthreads - 1))"
+    nthreads="$((nthreads / 2))"
+    nthreads="$((nthreads - 1))"
+    if [ $nthreads -le 1 ]; then
+        nthreads=1
+    fi
 else
-  nthreads=1
+    nthreads=1
 fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Using $nthreads threads."
 
