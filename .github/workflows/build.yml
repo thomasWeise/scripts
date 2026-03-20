@@ -11,16 +11,15 @@ jobs:
     steps:
 # check out the github repository
     - uses: actions/checkout@v4.1.6
-# clean-up
-    - name: clean up 1
+# compress the scripts into a tar.xz archive
+    - name: compress scripts
+      run:
+        ./linux/xzCompress.sh scripts LICENSE README.md linux
+# remove files that shall not be committed
+    - name: clean up
       run: |
         rm -f .gitignore
         rm -rf .github
-    - name: compress
-      run:
-        ./linux/xzCompress.sh scripts linux
-    - name: clean up 2
-      run: |
         rm -rf *.md
 # deploy to github pages
     - name: deploy scripts
