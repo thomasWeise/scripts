@@ -12,11 +12,16 @@ jobs:
 # check out the github repository
     - uses: actions/checkout@v4.1.6
 # clean-up
-    - name: clean up
+    - name: clean up 1
       run: |
-        rm -rf *.md
         rm -f .gitignore
         rm -rf .github
+    - name: compress
+      run:
+        ./linux/xzCompress.sh scripts linux
+    - name: clean up 2
+      run: |
+        rm -rf *.md
 # deploy to github pages
     - name: deploy scripts
       uses: JamesIves/github-pages-deploy-action@65b5dfd4f5bcd3a7403bbc2959c144256167464e
