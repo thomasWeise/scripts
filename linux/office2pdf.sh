@@ -25,7 +25,7 @@ if [[ -n "$dstDocument" ]]; then
 else
   dstDocument="$(basename "${srcDocument%.*}.pdf")"
   dstDocument="$(realpath $dstDocument)"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now destination document specified, therefore converting '$srcDocument' to  '$dstDocument'."
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No destination document specified, therefore converting '$srcDocument' to  '$dstDocument'."
 fi
 
 package="libreoffice"
