@@ -31,17 +31,17 @@ fi
 
 package="ghostscript"
 if dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed"; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): GhostScript is installed, so we can use it."
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): '$package' is installed, so we can use it."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): GhostScript is not installed. We install it now. This needs to be done only once."
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): '$package' is not installed. We install it now. This needs to be done only once."
   echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We first update the package cache. This requires sudo privileges."
   sudo apt-get update -y
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We now install GhostScript. This requires sudo privileges."
-  sudo apt-get install -y libreoffice
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Installation is finished."
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We now install '$package'. This requires sudo privileges."
+  sudo apt-get install -y "$package"
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The installation of '$package' is finished."
 fi
 
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now piping document through GhostScript."
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now piping document '$srcDocument' through '$package', creating '$dstDocument'."
 
 gs -dAntiAliasColorImages=true \
    -dAntiAliasGrayImages=true \
