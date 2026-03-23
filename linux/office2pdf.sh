@@ -10,6 +10,8 @@
 # same name but .pdf as extension in the current directory.
 # The conversion may not preserve some images correctly, but it more or less
 # works.
+#
+# This script is basically a wrapper around LibreOffice.
 
 # strict error handling
 set -o pipefail  # trace ERR through pipes
@@ -17,7 +19,21 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+package="libreoffice"
+if ! ( (dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed") || (snap list | grep "^$package" -q) ); then
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): $package is not installed but needed."
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install $package'."
+  exit 1
+fi
+
 srcDocument="$(realpath "$1")"
+if [ -f "$srcDocument" ]; then
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument'."
+else
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
+  exit 1
+fi
+
 dstDocument="${2:-}"
 if [[ -n "$dstDocument" ]]; then
   dstDocument="$(realpath $dstDocument)"
@@ -26,18 +42,6 @@ else
   dstDocument="$(basename "${srcDocument%.*}.pdf")"
   dstDocument="$(realpath $dstDocument)"
   echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No destination document specified, therefore converting '$srcDocument' to  '$dstDocument'."
-fi
-
-package="libreoffice"
-if dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed"; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): '$package' is installed, so we can use it."
-else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): '$package' is not installed. We install it now. This needs to be done only once."
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We first update the package cache. This requires sudo privileges."
-  sudo apt-get update -y
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We now install '$package'. This requires sudo privileges."
-  sudo apt-get install -y "$package"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The installation of '$package' is finished."
 fi
 
 tempDir="$(mktemp -d)"
@@ -53,4 +57,10 @@ mv "$outPath" "$dstDocument"
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Removing '$tempDir'."
 rm -d "$tempDir"
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished converting '$srcDocument' to '$dstDocument'."
+
+if [ -f "$dstDocument" ]; then
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished converting '$srcDocument' to '$dstDocument'."
+else
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination document '$dstDocument' was not created."
+  exit 1
+fi

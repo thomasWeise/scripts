@@ -14,7 +14,12 @@ set -o errexit   # set -e : exit the script if any statement returns a non-true 
 
 srcDocument="$(realpath "$1")"
 srcExtension="${srcDocument##*.}"
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument' with file extension '$srcExtension'."
+if [ -f "$srcDocument" ]; then
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument' with file extension '$srcExtension'."
+else
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
+  exit 1
+fi
 
 outSpec="$2"
 dstExtension="${outSpec##*.}"
@@ -22,7 +27,7 @@ if [[ "$dstExtension" != "$outSpec" ]]; then
   dstDocument="$(realpath "$outSpec")"
 else
   dstExtension="$outSpec"
-  dstDocument="$(realpath "${srcDocument%.*}$dstExtension")"
+  dstDocument="$(realpath "${srcDocument%.*}.$dstExtension")"
 fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got destination document '$dstDocument' with file extension '$dstExtension'."
 
@@ -34,6 +39,14 @@ case "$srcExtension" in
     case "$dstExtension" in
       pdf)
         "$scriptDir/office2pdf.sh" "$srcDocument" "$dstDocument"
+        exit 0
+        ;;
+    esac
+    ;;
+  emf|eps|pdf|ps|svg|wmf)
+    case "$dstExtension" in
+      emf|eps|pdf|png|ps|svg|wmf)
+        "$scriptDir/vec2vec.sh" "$srcDocument" "$dstDocument"
         exit 0
         ;;
     esac

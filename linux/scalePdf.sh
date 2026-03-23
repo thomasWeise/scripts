@@ -10,6 +10,8 @@
 # If the output file name is not specified, we will create a document in the
 # current directory based on the input document name, i.e., "123.pdf" becomes
 # "123_200dpi.pdf" if 200 were specified as second parameter.
+#
+# This script is basically a wrapper around ghostscript.
 
 # strict error handling
 set -o pipefail  # trace ERR through pipes
@@ -17,7 +19,21 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+package="ghostscript"
+if ! ( (dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed") || (snap list | grep "^$package" -q) ); then
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): $package is not installed but needed."
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install $package'."
+  exit 1
+fi
+
 srcDocument="$(realpath "$1")"
+if [ -f "$srcDocument" ]; then
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document is '$srcDocument'."
+else
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
+  exit 1
+fi
+
 dpi="$2"
 dstDocument="${3:-}"
 if [[ -n "$dstDocument" ]]; then
@@ -29,19 +45,7 @@ else
   echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No destination document specified, therefore converting '$srcDocument' to  '$dstDocument' using $dpi dpi."
 fi
 
-package="ghostscript"
-if dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed"; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): '$package' is installed, so we can use it."
-else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): '$package' is not installed. We install it now. This needs to be done only once."
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We first update the package cache. This requires sudo privileges."
-  sudo apt-get update -y
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We now install '$package'. This requires sudo privileges."
-  sudo apt-get install -y "$package"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The installation of '$package' is finished."
-fi
-
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now piping document '$srcDocument' through '$package', creating '$dstDocument'."
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now piping document '$srcDocument' through GhostScript, creating '$dstDocument'."
 
 gs -dAntiAliasColorImages=true \
    -dAntiAliasGrayImages=true \
@@ -101,4 +105,9 @@ gs -dAntiAliasColorImages=true \
    "$srcDocument" \
    -q
 
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished converting '$srcDocument' to '$dstDocument'."
+if [ -f "$dstDocument" ]; then
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished scaling '$srcDocument' to $dpi DPI and writing output to '$dstDocument'."
+else
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination document '$dstDocument' was not created."
+  exit 1
+fi
