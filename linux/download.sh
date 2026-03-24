@@ -9,6 +9,12 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+if [ $# -lt 1 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): File downloader script."
+    echo "Parameters: any number of URLs to download"
+    exit 0
+fi
+
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Welcome to using the download script for downloading '$@'."
 for i in {1..10}; do
     set +o errexit

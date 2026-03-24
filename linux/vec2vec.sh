@@ -20,6 +20,15 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+if [ $# -lt 2 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Convert one vector graphics format to another."
+    echo "Parameters:"
+    echo " 1. path to the source file (svg, pdf, wmf, emf, eps, ps)"
+    echo " 2. destination file extension OR path to destination document"
+    echo " 3. OPTIONAL: 'flatten' for PDF sources to convert text to curves"
+    exit 1
+fi
+
 package="inkscape"
 if ! ( (dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed") || (snap list | grep "^$package" -q) ); then
   echo "$(date +'%0Y-%0m-%0d %0R:%0S'): $package is not installed but needed."

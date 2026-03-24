@@ -17,6 +17,16 @@
 #    'B', and 'C', and so on are packaged into it.
 #    'Y' is treated solely as archive name, not as source.
 
+if [ $# -lt 1 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Compress files or folders to zip."
+    echo "Parameters --- EITHER ----"
+    echo " 1. file or folder to compress, will create 'name + .zip' archive"
+    echo "Parameters --- OR ----"
+    echo " 1. base name for archive; '.zip' will be appended"
+    echo " 2., 3., ... paths to files or folders to compress"
+    exit 1
+fi
+
 # strict error handling
 set -o pipefail  # trace ERR through pipes
 set -o errtrace  # trace ERR through 'time command' and other functions

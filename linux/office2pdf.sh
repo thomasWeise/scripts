@@ -19,6 +19,14 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+if [ $# -lt 1 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Convert an MS Office document of PDF."
+    echo "Parameters:"
+    echo " 1. path to the source MS Office document"
+    echo " 2. OPTIONAL: Path to destination document"
+    exit 1
+fi
+
 package="libreoffice"
 if ! ( (dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed") || (snap list | grep "^$package" -q) ); then
   echo "$(date +'%0Y-%0m-%0d %0R:%0S'): $package is not installed but needed."

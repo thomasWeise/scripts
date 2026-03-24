@@ -12,6 +12,14 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+if [ $# -lt 2 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Convert one document to another type."
+    echo "Parameters:"
+    echo " 1. path to source document"
+    echo " 2. destination file extension OR path to destination document"
+    exit 0
+fi
+
 srcDocument="$(realpath "$1")"
 srcExtension="${srcDocument##*.}"
 if [ -f "$srcDocument" ]; then

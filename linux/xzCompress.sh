@@ -27,6 +27,16 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+if [ $# -lt 1 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Compress files or folders to tar.xz."
+    echo "Parameters --- EITHER ----"
+    echo " 1. file or folder to compress, will create 'name + .tar.xz' archive"
+    echo "Parameters --- OR ----"
+    echo " 1. base name for archive; '.tar.xz' will be appended"
+    echo " 2., 3., ... paths to files or folders to compress"
+    exit 1
+fi
+
 dest="${1%/}"
 dest="$(basename "$dest").tar.xz"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination archive name is '$dest'."

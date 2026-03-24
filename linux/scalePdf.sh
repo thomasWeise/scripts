@@ -3,7 +3,7 @@
 # (Down)scale a PDF file to the given DPI value.
 #
 # The script expects the following parameters:
-# 1. The path to a source document.
+# 1. The path to a source PDF document.
 # 2. The DPI value to scale to.
 # 3. Optional: The output file name.
 #
@@ -18,6 +18,15 @@ set -o pipefail  # trace ERR through pipes
 set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
+
+if [ $# -lt 2 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): (Down)Scale the images in a PDF document."
+    echo "Parameters:"
+    echo " 1. path to the source PDF document"
+    echo " 2. the DPI value to scale to"
+    echo " 3. OPTIONAL: output file name"
+    exit 1
+fi
 
 package="ghostscript"
 if ! ( (dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed") || (snap list | grep "^$package" -q) ); then

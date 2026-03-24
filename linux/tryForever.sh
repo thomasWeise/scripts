@@ -19,6 +19,14 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+if [ $# -lt 1 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Execute a command until it succeeds."
+    echo "Parameters:"
+    echo " 1. the command to execute"
+    echo " 2. OPTIONAL: a pattern for log files to create (index + .txt will be appended)"
+    exit 1
+fi
+
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Welcome to the forever-trying script."
 
 command="$1"

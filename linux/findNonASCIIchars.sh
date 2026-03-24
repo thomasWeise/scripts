@@ -9,6 +9,13 @@ set -o errtrace  # trace ERR through 'time command' and other functions
 set -o nounset   # set -u : exit the script if you try to use an uninitialized variable
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
+if [ $# -lt 1 ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Find non-ASCII characters in a file."
+    echo "Parameters:"
+    echo " 1. path to file"
+    exit 1
+fi
+
 srcDocument="$(realpath "$1")"
 
 if [ -f "$srcDocument" ]; then
