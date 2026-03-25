@@ -17,7 +17,7 @@ jobs:
         website="/tmp/website"
         mkdir -p $website
         cd ..
-        ./linux/xzCompress.sh "$website/scripts" ./scripts/LICENSE ./scripts/README.md ./scripts/linux
+        ./scripts/linux/xzCompress.sh "$website/scripts" ./scripts/LICENSE ./scripts/README.md ./scripts/linux
         cd ./scripts
         rm -f .gitignore
         rm -rf .github
