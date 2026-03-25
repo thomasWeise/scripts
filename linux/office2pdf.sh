@@ -27,29 +27,28 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
-package="libreoffice"
-if ! ( (dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed") || (snap list | grep "^$package" -q) ); then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): $package is not installed but needed."
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install $package'."
-  exit 1
+if ! ( command -v libreoffice &> /dev/null ); then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): LibreOffice is not installed but needed."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install libreoffice'."
+    exit 1
 fi
 
 srcDocument="$(realpath "$1")"
 if [ -f "$srcDocument" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument'."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
-  exit 1
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
+    exit 1
 fi
 
 dstDocument="${2:-}"
 if [[ -n "$dstDocument" ]]; then
-  dstDocument="$(realpath $dstDocument)"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Converting '$srcDocument' to the specified destination document '$dstDocument'."
+    dstDocument="$(realpath $dstDocument)"
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Converting '$srcDocument' to the specified destination document '$dstDocument'."
 else
-  dstDocument="$(basename "${srcDocument%.*}.pdf")"
-  dstDocument="$(realpath $dstDocument)"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No destination document specified, therefore converting '$srcDocument' to  '$dstDocument'."
+    dstDocument="$(basename "${srcDocument%.*}.pdf")"
+    dstDocument="$(realpath $dstDocument)"
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No destination document specified, therefore converting '$srcDocument' to  '$dstDocument'."
 fi
 
 tempDir="$(mktemp -d)"
@@ -67,8 +66,8 @@ echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Removing '$tempDir'."
 rm -d "$tempDir"
 
 if [ -f "$dstDocument" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished converting '$srcDocument' to '$dstDocument'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished converting '$srcDocument' to '$dstDocument'."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination document '$dstDocument' was not created."
-  exit 1
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination document '$dstDocument' was not created."
+    exit 1
 fi

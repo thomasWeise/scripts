@@ -11,7 +11,7 @@
 # current directory based on the input document name, i.e., "123.pdf" becomes
 # "123_200dpi.pdf" if 200 were specified as second parameter.
 #
-# This script is basically a wrapper around ghostscript.
+# This script is basically a wrapper around Ghostscript.
 
 # strict error handling
 set -o pipefail  # trace ERR through pipes
@@ -29,29 +29,29 @@ if [ $# -lt 2 ]; then
 fi
 
 package="ghostscript"
-if ! ( (dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed") || (snap list | grep "^$package" -q) ); then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): $package is not installed but needed."
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install $package'."
-  exit 1
+if ! ( command -v gs &> /dev/null ); then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Ghostscript is not installed but needed."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install ghostscript'."
+    exit 1
 fi
 
 srcDocument="$(realpath "$1")"
 if [ -f "$srcDocument" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document is '$srcDocument'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document is '$srcDocument'."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
-  exit 1
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
+    exit 1
 fi
 
 dpi="$2"
 dstDocument="${3:-}"
 if [[ -n "$dstDocument" ]]; then
-  dstDocument="$(realpath $dstDocument)"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Scaling '$srcDocument' to the specified destination document '$dstDocument' using $dpi dpi."
+    dstDocument="$(realpath $dstDocument)"
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Scaling '$srcDocument' to the specified destination document '$dstDocument' using $dpi dpi."
 else
-  dstDocument="$(basename "${srcDocument%.*}_${dpi}dpi.pdf")"
-  dstDocument="$(realpath $dstDocument)"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No destination document specified, therefore converting '$srcDocument' to  '$dstDocument' using $dpi dpi."
+    dstDocument="$(basename "${srcDocument%.*}_${dpi}dpi.pdf")"
+    dstDocument="$(realpath $dstDocument)"
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No destination document specified, therefore converting '$srcDocument' to  '$dstDocument' using $dpi dpi."
 fi
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now piping document '$srcDocument' through GhostScript, creating '$dstDocument'."
@@ -115,8 +115,8 @@ gs -dAntiAliasColorImages=true \
    -q
 
 if [ -f "$dstDocument" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished scaling '$srcDocument' to $dpi DPI and writing output to '$dstDocument'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished scaling '$srcDocument' to $dpi DPI and writing output to '$dstDocument'."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination document '$dstDocument' was not created."
-  exit 1
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination document '$dstDocument' was not created."
+    exit 1
 fi

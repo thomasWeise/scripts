@@ -29,65 +29,64 @@ if [ $# -lt 2 ]; then
     exit 1
 fi
 
-package="inkscape"
-if ! ( (dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q "ok installed") || (snap list | grep "^$package" -q) ); then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): $package is not installed but needed."
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install $package'."
-  exit 1
+if ! ( command -v inkscape &> /dev/null ); then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Inkscape is not installed but needed."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install inkscape'."
+    exit 1
 fi
 
 srcDocument="$(realpath "$1")"
 srcExtension="${srcDocument##*.}"
 if [ -f "$srcDocument" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument' with file extension '$srcExtension'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument' with file extension '$srcExtension'."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
-  exit 1
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
+    exit 1
 fi
 
 outSpec="$2"
 dstExtension="${outSpec##*.}"
 if [[ "$dstExtension" != "$outSpec" ]]; then
-  dstDocument="$(realpath "$outSpec")"
+    dstDocument="$(realpath "$outSpec")"
 else
-  dstExtension="$outSpec"
-  dstDocument="$(realpath "${srcDocument%.*}.$dstExtension")"
+    dstExtension="$outSpec"
+    dstDocument="$(realpath "${srcDocument%.*}.$dstExtension")"
 fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We will convert document '$srcDocument' to '$dstDocument'."
 
 moreArgs="--export-type=$dstExtension --export-background-opacity=0.0 --export-area-page --vacuum-defs"
 if [ "$srcExtension" == "pdf" ]; then
-  if [ "$dstExtension" != "ps" ]; then
-    moreArgs="$moreArgs --pdf-page=1"
-  fi
+    if [ "$dstExtension" != "ps" ]; then
+        moreArgs="$moreArgs --pdf-page=1"
+    fi
 fi
 if [ "$dstExtension" == "pdf" ]; then
-  moreArgs="$moreArgs --export-pdf-version=1.5"
+    moreArgs="$moreArgs --export-pdf-version=1.5"
 elif [ "$dstExtension" == "svg" ]; then
-  moreArgs="$moreArgs --export-plain-svg"
+    moreArgs="$moreArgs --export-plain-svg"
 elif [ "$dstExtension" == "ps" ]; then
-  moreArgs="$moreArgs --export-ps-level=3"
+    moreArgs="$moreArgs --export-ps-level=3"
 elif [ "$dstExtension" == "eps" ]; then
-  moreArgs="$moreArgs --export-ps-level=3"
+    moreArgs="$moreArgs --export-ps-level=3"
 fi
 
 if [ $# \> 2 ]; then
-  if [ "$3" == "flatten" ]; then
-      if [ "$srcExtension" == "pdf" ]; then
-        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Try to flatten input PDF."
-        moreArgs="${moreArgs} --pdf-poppler"
-      else
-        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Flattening is only supported for PDF input."
-      fi
-  fi
+    if [ "$3" == "flatten" ]; then
+        if [ "$srcExtension" == "pdf" ]; then
+            echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Try to flatten input PDF."
+            moreArgs="${moreArgs} --pdf-poppler"
+        else
+            echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Flattening is only supported for PDF input."
+        fi
+    fi
 fi
 
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now using $package to convert '$srcDocument' to '$dstDocument' with arguments '$moreArgs'."
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now using Inkscape to convert '$srcDocument' to '$dstDocument' with arguments '$moreArgs'."
 inkscape --export-filename="$dstDocument" $moreArgs "$srcDocument"
 
 if [ -f "$dstDocument" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished converting '$srcDocument' to '$dstDocument'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished converting '$srcDocument' to '$dstDocument'."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination document '$dstDocument' was not created."
-  exit 1
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination document '$dstDocument' was not created."
+    exit 1
 fi

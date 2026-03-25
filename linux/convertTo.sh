@@ -23,19 +23,19 @@ fi
 srcDocument="$(realpath "$1")"
 srcExtension="${srcDocument##*.}"
 if [ -f "$srcDocument" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument' with file extension '$srcExtension'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument' with file extension '$srcExtension'."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
-  exit 1
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
+    exit 1
 fi
 
 outSpec="$2"
 dstExtension="${outSpec##*.}"
 if [[ "$dstExtension" != "$outSpec" ]]; then
-  dstDocument="$(realpath "$outSpec")"
+    dstDocument="$(realpath "$outSpec")"
 else
-  dstExtension="$outSpec"
-  dstDocument="$(realpath "${srcDocument%.*}.$dstExtension")"
+    dstExtension="$outSpec"
+    dstDocument="$(realpath "${srcDocument%.*}.$dstExtension")"
 fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got destination document '$dstDocument' with file extension '$dstExtension'."
 
@@ -43,22 +43,22 @@ scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The directory where we look for conversion scripts is '$scriptDir'."
 
 case "$srcExtension" in
-  doc|docx|ppt|pptx|xls|xlsx)
-    case "$dstExtension" in
-      pdf)
-        "$scriptDir/office2pdf.sh" "$srcDocument" "$dstDocument"
-        exit 0
+    doc|docx|ppt|pptx|xls|xlsx)
+        case "$dstExtension" in
+            pdf)
+                "$scriptDir/office2pdf.sh" "$srcDocument" "$dstDocument"
+                exit 0
+            ;;
+        esac
         ;;
-    esac
-    ;;
-  emf|eps|pdf|ps|svg|wmf)
-    case "$dstExtension" in
-      emf|eps|pdf|png|ps|svg|wmf)
-        "$scriptDir/vec2vec.sh" "$srcDocument" "$dstDocument"
-        exit 0
+    emf|eps|pdf|ps|svg|wmf)
+        case "$dstExtension" in
+            emf|eps|pdf|png|ps|svg|wmf)
+                "$scriptDir/vec2vec.sh" "$srcDocument" "$dstDocument"
+                exit 0
+            ;;
+        esac
         ;;
-    esac
-  ;;
 esac
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): I don't know how to convert '$srcExtension' files to '$dstExtension' files."

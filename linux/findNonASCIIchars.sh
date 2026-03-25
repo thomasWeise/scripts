@@ -19,13 +19,13 @@ fi
 srcDocument="$(realpath "$1")"
 
 if [ -f "$srcDocument" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now searching for non-ASCII characters in document '$srcDocument'."
-  if (grep --color='auto' -P -n '[^\x00-\x7F]' "$srcDocument"); then
-    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Found some non-ASCII characters in document '$srcDocument'."
-  else
-    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No non-ASCII characters found in document '$srcDocument'."
-  fi
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now searching for non-ASCII characters in document '$srcDocument'."
+    if (grep --color='auto' -P -n '[^\x00-\x7F]' "$srcDocument"); then
+        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Found some non-ASCII characters in document '$srcDocument'."
+    else
+        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): No non-ASCII characters found in document '$srcDocument'."
+    fi
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): '$srcDocument' is not a file."
-  exit 1
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): '$srcDocument' is not a file."
+    exit 1
 fi
