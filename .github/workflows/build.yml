@@ -12,19 +12,21 @@ jobs:
 # check out the github repository
     - uses: actions/checkout@v4.1.6
 # compress the scripts into a tar.xz archive
-    - name: compress scripts
-      run:
-        ./linux/xzCompress.sh scripts LICENSE README.md linux
-# remove files that shall not be committed
-    - name: clean up
+    - name: assemble
       run: |
+        website="/tmp/website"
+        mkdir -p $website
+        cd ..
+        ./linux/xzCompress.sh "$website/scripts" ./scripts/LICENSE ./scripts/README.md ./scripts/linux
+        cd ./scripts
         rm -f .gitignore
         rm -rf .github
         rm -rf *.md
+        cp -R linux "$website/"
 # deploy to github pages
     - name: deploy scripts
       uses: JamesIves/github-pages-deploy-action@65b5dfd4f5bcd3a7403bbc2959c144256167464e
       with:
         branch: gh-pages
-        folder: /home/runner/work/scripts/scripts/
+        folder: /tmp/website/
         single-commit: true
