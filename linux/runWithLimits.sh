@@ -28,15 +28,15 @@ echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Welcome to the program execution script fo
 cpus="$1"
 if [ "$cpus" -lt 1 ]; then
     if command -v nproc &> /dev/null; then
-        ncpus="$(nproc --all)"
-        ncpus="$((ncpus - 1))"
-        ncpus="$((ncpus / 2))"
-        ncpus="$((ncpus - 1))"
-        if [ $ncpus -le 1 ]; then
-            ncpus=1
+        cpus="$(nproc --all)"
+        cpus="$((cpus - 1))"
+        cpus="$((cpus / 2))"
+        cpus="$((cpus - 1))"
+        if [ $cpus -le 1 ]; then
+            cpus=1
         fi
     else
-        ncpus=1
+        cpus=1
     fi
 fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We will permit the use of at most '$cpus' CPU cores."
