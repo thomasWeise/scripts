@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script executes a command while limiting its number of CPU cores and memory consumption.
+# This script run a command while limiting its number of CPU cores and memory consumption.
 #
 # Parameters:
 # 1. The maximum number of CPU cores to use.
