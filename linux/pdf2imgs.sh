@@ -20,7 +20,7 @@ if [ $# -lt 1 ]; then
     echo " 1. path to source document"
     echo " 2. OPTIONAL: resolution (DPI) of destination images, default: 300"
     echo " 3. OPTIONAL: file type [png|jpg], default: jpg"
-    echo " 4. OPTIONAL: path to destination folder, default: source name + '-images"
+    echo " 4. OPTIONAL: path to destination folder, default: source name + '-images'"
     exit 0
 fi
 
