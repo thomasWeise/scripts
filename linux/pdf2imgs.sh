@@ -66,9 +66,9 @@ if [ -n "$outType" ]; then
         exit 1
     fi
 else
-  outType="jpg"
-  device="jpeg"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Using default output type '$outType'."
+    outType="jpg"
+    device="jpeg"
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Using default output type '$outType'."
 fi
 
 
@@ -76,10 +76,10 @@ destFolder="${4:-}"
 srcPattern="$(basename "$srcDocument")"
 srcPattern="${srcPattern%.*}"
 if [ -n "$destFolder" ]; then
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination folder '$destFolder' specified."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination folder '$destFolder' specified."
 else
   destFolder="${srcPattern}-images"
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Using default destination folder '$destFolder'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Using default destination folder '$destFolder'."
 fi
 destFolder="$(realpath "$destFolder")"
 
@@ -126,4 +126,9 @@ gs -dAntiAliasColorImages=true \
    "$srcDocument" \
    -q
 
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Done converting '$srcDocument' to '$outType' images in folder '$destFolder'."
+if [ -f "${destFolder}/${srcPattern}-00001.${outType}" ]; then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Done converting '$srcDocument' to '$outType' images in folder '$destFolder' at $dpi DPI."
+else
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Error - no output file has been generated."
+    exit 1
+fi

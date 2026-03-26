@@ -33,9 +33,11 @@ outSpec="$2"
 dstExtension="${outSpec##*.}"
 if [[ "$dstExtension" != "$outSpec" ]]; then
     dstDocument="$(realpath "$outSpec")"
+    dstDocumentRaw="$dstDocument"
 else
     dstExtension="$outSpec"
-    dstDocument="$(realpath "${srcDocument%.*}.$dstExtension")"
+    dstDocumentRaw="$(realpath "${srcDocument%.*}")"
+    dstDocument="$(realpath "${dstDocumentRaw}.$dstExtension")"
 fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got destination document '$dstDocument' with file extension '$dstExtension'."
 
@@ -53,8 +55,22 @@ case "$srcExtension" in
         ;;
     emf|eps|pdf|ps|svg|wmf)
         case "$dstExtension" in
-            emf|eps|pdf|png|ps|svg|wmf)
+            emf|eps|pdf|ps|svg|wmf)
                 "$scriptDir/vec2vec.sh" "$srcDocument" "$dstDocument"
+                exit 0
+            ;;
+            png)
+                if [ "$dstDocument" == "$dstDocumentRaw" ]; then
+                    "$scriptDir/vec2vec.sh" "$srcDocument" "$dstDocument"
+                    exit 0
+                fi
+            ;;
+        esac
+        ;;&
+    pdf)
+        case "$dstExtension" in
+            jpg|jpeg|png)
+                "$scriptDir/pdf2imgs.sh" "$srcDocument" "" "$dstExtension" "$dstDocumentRaw"
                 exit 0
             ;;
         esac
