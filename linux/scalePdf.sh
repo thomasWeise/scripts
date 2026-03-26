@@ -28,7 +28,6 @@ if [ $# -lt 2 ]; then
     exit 1
 fi
 
-package="ghostscript"
 if ! ( command -v gs &> /dev/null ); then
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Ghostscript is not installed but needed."
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install ghostscript'."
@@ -87,6 +86,7 @@ gs -dAntiAliasColorImages=true \
    -dMonoImageDownsampleType=/Subsample \
    -dMonoImageResolution="$dpi" \
    -dNOPAUSE \
+   -dNOPROMPT \
    -dOptimize=true \
    -dPassThroughJPEGImages=true \
    -dPassThroughJPXImages=true \

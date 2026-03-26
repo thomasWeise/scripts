@@ -70,7 +70,7 @@ elif [ "$dstExtension" == "eps" ]; then
     moreArgs="$moreArgs --export-ps-level=3"
 fi
 
-if [ $# \> 2 ]; then
+if [ $# -gt 2 ]; then
     if [ "$3" == "flatten" ]; then
         if [ "$srcExtension" == "pdf" ]; then
             echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Try to flatten input PDF."

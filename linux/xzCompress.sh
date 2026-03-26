@@ -54,7 +54,7 @@ else
 fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Using $nthreads threads."
 
-if [ $# \> 1 ]; then
+if [ $# -gt 1 ]; then
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Beginning to compress sources '${@:2}' to destination '$dest'"
     nice -n 19 tar -c "${@:2}" | xz --threads=$nthreads -v -9e -c > "$dest"
 else

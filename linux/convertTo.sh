@@ -1,6 +1,6 @@
 #!/bin/bash -
 
-# Convert an documents from one type to another.
+# Convert a document from one type to another.
 #
 # The script expects the following parameters:
 # 1. The path to a source document.

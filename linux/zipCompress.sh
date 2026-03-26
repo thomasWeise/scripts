@@ -37,7 +37,7 @@ dest="${1%/}"
 dest="$(basename "$dest").zip"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination archive name is '$dest'."
 
-if [ $# \> 1 ]; then
+if [ $# -gt 1 ]; then
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Beginning to compress sources '${@:2}' to destination '$dest'"
     nice -n 19 zip -9 -r "$dest" "${@:2}"
 else
