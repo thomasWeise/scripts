@@ -4,9 +4,9 @@
 #
 # The script expects the following parameters:
 # 1. The path to a source document.
-# 2. The resolution (DPI) of the images to generate
+# 2. OPTIONAL: The resolution (DPI) of the images to generate (default: 300)
 # 3. OPTIONAL: The destination file type (default: jpg)
-# 4. OPTIONAL: The destination folder path
+# 4. OPTIONAL: The destination folder path (default: name-images)
 
 # strict error handling
 set -o pipefail  # trace ERR through pipes
