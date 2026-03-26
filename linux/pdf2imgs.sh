@@ -40,7 +40,7 @@ fi
 
 dpi="${2:-}"
 if [ -n "$dpi" ]; then
-    if [ dpi -lt 1 ]; then
+    if [ "$dpi" -lt 1 ]; then
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination image resolution must be at least 1, but is '$dpi'."
     else
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination image resolution is specified as '$dpi'."
@@ -54,22 +54,23 @@ outType="${3:-}"
 if [ -n "$outType" ]; then
     if [ "$outType" == "jpg" ]; then
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Will create JPEG images."
+        device="jpeg"
+    elif [ "$outType" == "jpeg" ]; then
+        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Will create JPEG images."
+        device="jpeg"
     elif [ "$outType" == "png" ]; then
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Will create PNG images."
+        device="pngalpha"
     else
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Output type '$outType' not supported."
         exit 1
     fi
 else
   outType="jpg"
+  device="jpeg"
   echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Using default output type '$outType'."
 fi
 
-if [ "$outType" == "jpg" ]; then
-    moreArgs=("-sDEVICE=jpeg" "-r${dpi}*${dpi}")
-else
-    moreArgs=("-sDEVICE=pngalpha" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4" "-r${dpi}*${dpi}")
-fi
 
 destFolder="${4:-}"
 srcPattern="$(basename "$srcDocument")"
@@ -102,6 +103,7 @@ gs -dAntiAliasColorImages=true \
    -dDownsampleGrayImages=false \
    -dDownsampleMonoImages=false \
    -dEPSCrop \
+   -dGraphicsAlphaBits=4 \
    -dHaveTransparency=true \
    -dMaxBitmap=2147483647 \
    -dNOPAUSE \
@@ -116,8 +118,10 @@ gs -dAntiAliasColorImages=true \
    -dOmitXMP=true \
    -dQUIET \
    -dSAFER \
+   -dTextAlphaBits=4 \
    -dUCRandBGInfo=/Remove \
-   "$moreArgs" \
+   -r${dpi}*${dpi} \
+   -sDEVICE="$device" \
    -sOutputFile="$destPattern" \
    "$srcDocument" \
    -q
