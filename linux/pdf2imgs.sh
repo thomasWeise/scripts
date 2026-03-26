@@ -85,7 +85,7 @@ destFolder="$(realpath "$destFolder")"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Creating destination folder '$destFolder'."
 mkdir -p "$destFolder"
 
-destPattern="${destFolder}/${srcPattern}-%04d.${outType}"
+destPattern="${destFolder}/${srcPattern}-%05d.${outType}"
 destPattern="$(realpath "$destPattern")"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination file name pattern is '$destPattern'."
 
