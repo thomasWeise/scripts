@@ -38,7 +38,11 @@ if [ $# -lt 1 ]; then
 fi
 
 dest="${1%/}"
-dest="$(basename "$dest").tar.xz"
+if [ $# -gt 1 ]; then
+  dest="$(realpath "${dest}.tar.xz")"
+else
+  dest="$(basename "$dest").tar.xz"
+fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination archive name is '$dest'."
 
 if command -v nproc &> /dev/null; then

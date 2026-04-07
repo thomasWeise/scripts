@@ -34,7 +34,12 @@ set -o nounset   # set -u : exit the script if you try to use an uninitialized v
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
 dest="${1%/}"
-dest="$(basename "$dest").zip"
+dest="${1%/}"
+if [ $# -gt 1 ]; then
+  dest="$(realpath "${dest}.zip")"
+else
+  dest="$(basename "$dest").zip"
+fi
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Destination archive name is '$dest'."
 
 if [ $# -gt 1 ]; then
