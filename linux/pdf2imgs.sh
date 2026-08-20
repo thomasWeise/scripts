@@ -26,7 +26,7 @@ fi
 
 if ! ( command -v gs &> /dev/null ); then
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Ghostscript is not installed but needed."
-    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install ghostscript'."
+    echo "You can install it via 'sudo apt-get install ghostscript'."
     exit 1
 fi
 

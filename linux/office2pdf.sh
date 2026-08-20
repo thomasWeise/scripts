@@ -29,7 +29,7 @@ fi
 
 if ! ( command -v libreoffice &> /dev/null ); then
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): LibreOffice is not installed but needed."
-    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): You can install it via 'sudo apt-get install libreoffice'."
+    echo "You can install it via 'sudo apt-get install libreoffice'."
     exit 1
 fi
 
