@@ -83,7 +83,7 @@ fi
 
 tempPdfA="$(mktemp --suffix=.pdf)"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We first create the temporary pdf with the rasterized/OCRed images as '$tempPdfA'."
-ocrmypdf -l "$langs" --output-type pdfa --no-tesseract-downsample-large-images --deskew --clean-final --continue-on-soft-render-error --optimize 1  --force-ocr "$srcDocument" "$tempPdfA"
+ocrmypdf -l "$langs" --output-type pdfa --no-tesseract-downsample-large-images --deskew --clean-final --continue-on-soft-render-error --optimize 0 --force-ocr "$srcDocument" "$tempPdfA"
 
 tempPdfB="$(mktemp --suffix=.pdf)"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now we remove all images from '$tempPdfA' and store it as '$tempPdfB'."
