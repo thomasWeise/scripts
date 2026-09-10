@@ -1,6 +1,6 @@
 #!/bin/bash -
 
-# Add an OCR-Layer to a PDF document.
+# Add an OCR-Layer to a PDF document or convert an image to PDF and add an OCR layer.
 #
 # The script expects the following parameters:
 # 1. The path to a source document.
@@ -14,13 +14,19 @@ set -o nounset   # set -u : exit the script if you try to use an uninitialized v
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
 if [ $# -lt 1 ]; then
-    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Add an OCR layer to a PDF document."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Add an OCR layer to a PDF document or convert an image to an OCR-ed PDF."
     echo "All fonts are dropped, all text is turned into vector graphics, and a new text layer based on OCR is put on top of the document."
     echo "Parameters:"
     echo " 1. path to source document"
     echo " 2. OPTIONAL: the path to the destination document (default: source + _ocr)"
     echo " 3. OPTIONAL: the languages/scrips to use, like deu, eng, ... (default: all)"
     exit 0
+fi
+
+if ! ( command -v img2pdf &> /dev/null ); then
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): img2pdf is not installed but needed."
+    echo "You can install it via 'sudo apt-get install img2pdf"
+    exit 1
 fi
 
 if ! ( command -v tesseract &> /dev/null ); then
@@ -49,8 +55,9 @@ if ! ( command -v gs &> /dev/null ); then
 fi
 
 srcDocument="$(realpath "$1")"
+srcExtension="${srcDocument##*.}"
 if [ -f "$srcDocument" ]; then
-    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument'."
+    echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Got source document '$srcDocument' with extension '$srcExtension'."
 else
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document $srcDocument' does not exist."
     exit 1
@@ -82,10 +89,68 @@ else
 fi
 
 tempPdfA="$(mktemp --suffix=.pdf)"
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We first create the temporary pdf with the rasterized/OCRed images as '$tempPdfA'."
-ocrmypdf -l "$langs" --output-type pdfa --no-tesseract-downsample-large-images --deskew --clean-final --continue-on-soft-render-error --optimize 0 --force-ocr "$srcDocument" "$tempPdfA"
-
 tempPdfB="$(mktemp --suffix=.pdf)"
+tempPdfC="$(mktemp --suffix=.pdf)"
+
+if [ "$srcExtension" = "pdf" ] ; then
+  useInput="$srcDocument"
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The source document is a pdf. So we remove all text from '$srcDocument' and store it as '$tempPdfC' to use it as background later."
+  gs -dAutoRotatePages=/None \
+     -dBATCH \
+     -dCompatibilityLevel="1.7" \
+     -dCompressStreams=true \
+     -dCreateJobTicket=false \
+     -dDoThumbnails=false \
+     -dFastWebView=false \
+     -dHaveTransparency=true \
+     -dNOPAUSE \
+     -dNOPROMPT \
+     -dNoOutputFonts \
+     -dOptimize=true \
+     -dPDFSTOPONERROR=true \
+     -dPDFSTOPONWARNING=true \
+     -dPreserveCopyPage=false \
+     -dPreserveEPSInfo=false \
+     -dPreserveHalftoneInfo=false \
+     -dPreserveOPIComments=false \
+     -dPreserveOverprintSettings=false \
+     -dPreserveSeparation=false \
+     -dPreserveDeviceN=false \
+     -dPreserveMarkedContent=false \
+     -dPrinted=false \
+     -dOmitInfoDate=true \
+     -dOmitID=true \
+     -dOmitXMP=true \
+     -dQUIET \
+     -dSAFER \
+     -dSubsetFonts=true \
+     -dUCRandBGInfo=/Remove \
+     -dUNROLLFORMS \
+     -sDEVICE=pdfwrite \
+     -sOutputFile="$tempPdfC" \
+     "$srcDocument" \
+     -q
+else
+  useInput="$tempPdfC"
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Source document is not a PDF document, so we need to convert it to file '$tempPdfC' using img2pdf."
+
+  img2pdf --output "$useInput" \
+          --nodate \
+          --first-frame-only \
+          --rotation none \
+          --crop-border 0 \
+          --bleed-border 0 \
+          --trim-border 0 \
+          --art-border 0 \
+          --viewer-magnification fit \
+          --viewer-page-layout single \
+          "$srcDocument"
+fi
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished creating the image-only file '$tempPdfC'."
+
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We now create the temporary pdf with the rasterized/OCRed images as '$tempPdfA'."
+ocrmypdf -l "$langs" --output-type pdfa --no-tesseract-downsample-large-images --deskew --clean-final --continue-on-soft-render-error --optimize 0 --force-ocr "$useInput" "$tempPdfA"
+
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now we remove all images from '$tempPdfA' and store it as '$tempPdfB'."
 gs -dAutoRotatePages=/None \
    -dBATCH \
@@ -129,44 +194,6 @@ gs -dAutoRotatePages=/None \
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now we delete '$tempPdfA'."
 rm "$tempPdfA"
-
-tempPdfC="$(mktemp --suffix=.pdf)"
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now we remove all text from '$srcDocument' and store it as '$tempPdfC'."
-gs -dAutoRotatePages=/None \
-   -dBATCH \
-   -dCompatibilityLevel="1.7" \
-   -dCompressStreams=true \
-   -dCreateJobTicket=false \
-   -dDoThumbnails=false \
-   -dFastWebView=false \
-   -dHaveTransparency=true \
-   -dNOPAUSE \
-   -dNOPROMPT \
-   -dNoOutputFonts \
-   -dOptimize=true \
-   -dPDFSTOPONERROR=true \
-   -dPDFSTOPONWARNING=true \
-   -dPreserveCopyPage=false \
-   -dPreserveEPSInfo=false \
-   -dPreserveHalftoneInfo=false \
-   -dPreserveOPIComments=false \
-   -dPreserveOverprintSettings=false \
-   -dPreserveSeparation=false \
-   -dPreserveDeviceN=false \
-   -dPreserveMarkedContent=false \
-   -dPrinted=false \
-   -dOmitInfoDate=true \
-   -dOmitID=true \
-   -dOmitXMP=true \
-   -dQUIET \
-   -dSAFER \
-   -dSubsetFonts=true \
-   -dUCRandBGInfo=/Remove \
-   -dUNROLLFORMS \
-   -sDEVICE=pdfwrite \
-   -sOutputFile="$tempPdfC" \
-   "$srcDocument" \
-   -q
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finally, we super-impose the text layer from '$tempPdfB' onto '$tempPdfC' and store it as '$dstDocument'."
 
