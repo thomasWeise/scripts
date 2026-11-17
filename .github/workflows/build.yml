@@ -10,22 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 # check out the github repository
-    - uses: actions/checkout@v4.1.6
+    - uses: actions/checkout@v7.0.1
 # compress the scripts into a tar.xz archive
     - name: assemble
       run: |
         website="/tmp/website"
         mkdir -p $website
         cd ..
-        ./scripts/linux/xzCompress.sh "$website/scripts" ./scripts/LICENSE ./scripts/README.md ./scripts/linux
+        ./scripts/linux/xzCompress.sh "$website/scripts" ./scripts/LICENSE ./scripts/README.md ./scripts/linux ./scripts/linuxSetup
         cd ./scripts
         rm -f .gitignore
         rm -rf .github
         rm -rf *.md
         cp -R linux "$website/"
+        cp -R linuxSetup "$website/"
 # deploy to github pages
     - name: deploy scripts
-      uses: JamesIves/github-pages-deploy-action@65b5dfd4f5bcd3a7403bbc2959c144256167464e
+      uses: JamesIves/github-pages-deploy-action@v4.8.0
       with:
         branch: gh-pages
         folder: /tmp/website/
