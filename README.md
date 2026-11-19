@@ -8,7 +8,7 @@ Nothing special, just some scripts.
 
 
 ## 2. The Scripts.
-[Here](thomasweise.github.io/scripts/scripts.tar.xz) You can download the [complete archive of scripts](thomasweise.github.io/scripts/scripts.tar.xz).
+[Here](https://thomasweise.github.io/scripts/scripts.tar.xz) You can download the [complete archive of scripts](https://thomasweise.github.io/scripts/scripts.tar.xz).
 
 
 ## 3. License
