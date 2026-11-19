@@ -11,24 +11,26 @@ jobs:
     steps:
 # check out the github repository
     - uses: actions/checkout@v7.0.1
+# create HTML page
+    - name: Convert README to HTML
+      uses: jaywcjlove/markdown-to-html-cli@v5.0.4
+      with:
+        source: README.md
+        output: index.html
 # compress the scripts into a tar.xz archive
     - name: assemble
       run: |
         website="/tmp/website"
         mkdir -p $website
         cd ..
-        ./scripts/linux/xzCompress.sh "$website/scripts" ./scripts/LICENSE ./scripts/README.md ./scripts/linux ./scripts/linuxSetup
+        ./scripts/linux/xzCompress.sh "$website/scripts" ./scripts/LICENSE ./scripts/README.md ./scripts/index.html  ./scripts/linux ./scripts/linuxSetup
         cd ./scripts
         rm -f .gitignore
         rm -rf .github
         rm -rf *.md
         cp -R linux "$website/"
         cp -R linuxSetup "$website/"
-    - name: Convert README to HTML
-      uses: jaywcjlove/markdown-to-html-cli@v5.0.4
-      with:
-        source: README.md
-        output: /tmp/website/index.html
+        mv index.html "$website/"
 # deploy to github pages
     - name: deploy scripts
       uses: JamesIves/github-pages-deploy-action@v4.8.0
