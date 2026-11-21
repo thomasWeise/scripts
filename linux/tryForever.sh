@@ -51,7 +51,7 @@ if [ -n "$logBase" ]; then
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Attempt $cycle failed."
         cycle=$((cycle+1))
         log="$logBase${cycle}.txt"
-        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for 20s, then doing attempt $cycle and log file '$log'."
+        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for ${delay}, then doing attempt $cycle and log file '$log'."
         sleep "$delay"
     done
 else
@@ -61,7 +61,7 @@ else
     while ! $command 2>&1 ; do
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Attempt $cycle failed."
         cycle=$((cycle+1))
-        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for 20s, then doing attempt $cycle."
+        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for ${delay}, then doing attempt $cycle."
         sleep "$delay"
     done
 fi
