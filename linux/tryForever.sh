@@ -53,6 +53,7 @@ if [ -n "$logBase" ]; then
         log="$logBase${cycle}.txt"
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for ${delay}, then doing attempt $cycle and log file '$log'."
         sleep "$delay"
+        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now doing attempt $cycle and log file '$log'."
     done
 else
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Logging to stdout."
@@ -63,6 +64,7 @@ else
         cycle=$((cycle+1))
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for ${delay}, then doing attempt $cycle."
         sleep "$delay"
+        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now doing attempt $cycle and log file '$log'."
     done
 fi
 
