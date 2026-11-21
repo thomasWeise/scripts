@@ -24,6 +24,7 @@ if [ $# -lt 1 ]; then
     echo "Parameters:"
     echo " 1. the command to execute"
     echo " 2. OPTIONAL: a pattern for log files to create (index + .txt will be appended)"
+    echo " 3. OPTIONAL: a delay between attempts; default 20s"
     exit 1
 fi
 
@@ -31,6 +32,14 @@ echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Welcome to the forever-trying script."
 
 command="$1"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The command is '$command'."
+
+delay="${3:-}"
+if [ -n "$delay" ]; then
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We will use the specified delay of '$delay'."
+else
+  delay=20s
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We will use the default delay of '$delay'."
+fi
 
 logBase="${2:-}"
 if [ -n "$logBase" ]; then
@@ -43,7 +52,7 @@ if [ -n "$logBase" ]; then
         cycle=$((cycle+1))
         log="$logBase${cycle}.txt"
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for 20s, then doing attempt $cycle and log file '$log'."
-        sleep 20s
+        sleep "$delay"
     done
 else
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Logging to stdout."
@@ -53,7 +62,7 @@ else
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Attempt $cycle failed."
         cycle=$((cycle+1))
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for 20s, then doing attempt $cycle."
-        sleep 20s
+        sleep "$delay"
     done
 fi
 

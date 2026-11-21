@@ -32,7 +32,7 @@ fi
 if ! ( command -v tesseract &> /dev/null ); then
     echo "$(date +'%0Y-%0m-%0d %0R:%0S'): tesseract is not installed but needed."
     echo "You can install it via 'sudo apt-get install tesseract-ocr"
-    echo "More languages can be installed via 'sudo apt-get install tesseract-ocr-deu tesseract-ocr-end tesseract-ocr-chi-sim ...'."
+    echo "More languages can be installed via 'sudo apt-get install tesseract-ocr-deu tesseract-ocr-eng tesseract-ocr-chi-sim ...'."
     exit 1
 fi
 
