@@ -64,7 +64,7 @@ else
         cycle=$((cycle+1))
         echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for ${delay}, then doing attempt $cycle."
         sleep "$delay"
-        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now doing attempt $cycle and log file '$log'."
+        echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now doing attempt $cycle."
     done
 fi
 
