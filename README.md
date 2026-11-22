@@ -12,21 +12,21 @@ Nothing special, just some scripts.
 All scripts are for Ubuntu Linux.
 
 - [convertTo.sh](linux/convertTo.sh): Converting among array of different file formats,
-- [deleteZeroSizeFiles.sh](linux/deleteZeroSizeFiles.sh): Recursively delete empty files and directories, explained [here](https://thomasweise.github.io/posts/2026-03-08-deleting-empty-files-linux)
-- [download.sh](linux/download.sh): Try downloading files until success via a script, explained [here](https://thomasweise.github.io/posts/2026-03-17-downloading-files)
-- [findNonASCIIchars.sh](linux/findNonASCIIchars.sh): Finding non-ASCII characters in a text file, explained [here](https://thomasweise.github.io/posts/2026-03-24-finding-non-ascii-characters-in-text-documents)
-- [githubTruncate.sh](linux/githubTruncate.sh): Truncating a GitHub repository to its latest commit, deleting all previous history
-- [office2pdf.sh](linux/office2pdf.sh): Converting MS Office documents to PDF, explained [here](https://thomasweise.github.io/posts/2026-03-20-converting-ms-office-documents-to-pdf)
-- [pdf2imgs.sh](linux/pdf2imgs.sh): Converting a PDF document to a series of images, explained [here](https://thomasweise.github.io/posts/2026-03-26-converting-pdf-to-series-of-images)
-- [pdfAddOcrLayer.sh](linux/pdfAddOcrLayer.sh): Adding an OCR-based text layer to a PDF or on top of an image, explained [here](https://thomasweise.github.io/posts/2026-08-20-adding-an-ocr-text-layer-to-a-pdf-document)
-- [runWithLimits.sh](linux/runWithLimits.sh): Limiting the memory and CPU cores of a command, explained [here](https://thomasweise.github.io/posts/2026-03-25-limiting-the-memory-and-cpu-cores-of-a-command)
-- [scalePdf.sh](linux/scalePdf.sh): (Down-)Scaling the images in a PDF, explained [here](https://thomasweise.github.io/posts/2026-03-21-downscaling-images-in-pdf-documents)
-- [tryForever.sh](linux/tryForever.sh): Repeating a command until it succeeds, explained [here](https://thomasweise.github.io/posts/2026-03-09-repeating-until-success-linux) 
-- [update.sh](linux/update.sh): Updating all packages and snaps, explained [here](https://thomasweise.github.io/posts/2026-03-10-updating-packages-and-snaps-linux)
-- [vec2vec.sh](linux/vec2vec.sh): Converting among vector graphics formats, explained [here](https://thomasweise.github.io/posts/2026-03-23-converting-vector-graphics-formats)
-- [xzCompress.sh](linux/xzCompress.sh): Compressing files and folders into XZ archives, explained [here](https://thomasweise.github.io/posts/2026-03-18-compressing-files-and-directories-into-tar-xz-archives)
-- [zipCompress.sh](linux/zipCompress.sh): Compressing files and folders into ZIP archives, explained [here](https://thomasweise.github.io/posts/2026-03-19-compressing-files-and-directories-into-zip-archives)
-- Setup scripts for installing rootless Docker in China, as explained [here](https://thomasweise.github.io/posts/2026-11-17-installing-rootless-docker-on-ubuntu-in-china)
+- [deleteZeroSizeFiles.sh](linux/deleteZeroSizeFiles.sh): Recursively delete empty files and directories, explained [here](https://thomasweise.github.io/posts/2026-03-08-deleting-empty-files-linux),
+- [download.sh](linux/download.sh): Try downloading files until success via a script, explained [here](https://thomasweise.github.io/posts/2026-03-17-downloading-files),
+- [findNonASCIIchars.sh](linux/findNonASCIIchars.sh): Finding non-ASCII characters in a text file, explained [here](https://thomasweise.github.io/posts/2026-03-24-finding-non-ascii-characters-in-text-documents),
+- [githubTruncate.sh](linux/githubTruncate.sh): Truncating a GitHub repository to its latest commit, deleting all previous history,
+- [office2pdf.sh](linux/office2pdf.sh): Converting MS Office documents to PDF, explained [here](https://thomasweise.github.io/posts/2026-03-20-converting-ms-office-documents-to-pdf),
+- [pdf2imgs.sh](linux/pdf2imgs.sh): Converting a PDF document to a series of images, explained [here](https://thomasweise.github.io/posts/2026-03-26-converting-pdf-to-series-of-images),
+- [pdfAddOcrLayer.sh](linux/pdfAddOcrLayer.sh): Adding an OCR-based text layer to a PDF or on top of an image, explained [here](https://thomasweise.github.io/posts/2026-08-20-adding-an-ocr-text-layer-to-a-pdf-document),
+- [runWithLimits.sh](linux/runWithLimits.sh): Limiting the memory and CPU cores of a command, explained [here](https://thomasweise.github.io/posts/2026-03-25-limiting-the-memory-and-cpu-cores-of-a-command),
+- [scalePdf.sh](linux/scalePdf.sh): (Down-)Scaling the images in a PDF, explained [here](https://thomasweise.github.io/posts/2026-03-21-downscaling-images-in-pdf-documents),
+- [tryForever.sh](linux/tryForever.sh): Repeating a command until it succeeds, explained [here](https://thomasweise.github.io/posts/2026-03-09-repeating-until-success-linux), 
+- [update.sh](linux/update.sh): Updating all packages and snaps, explained [here](https://thomasweise.github.io/posts/2026-03-10-updating-packages-and-snaps-linux),
+- [vec2vec.sh](linux/vec2vec.sh): Converting among vector graphics formats, explained [here](https://thomasweise.github.io/posts/2026-03-23-converting-vector-graphics-formats),
+- [xzCompress.sh](linux/xzCompress.sh): Compressing files and folders into XZ archives, explained [here](https://thomasweise.github.io/posts/2026-03-18-compressing-files-and-directories-into-tar-xz-archives),
+- [zipCompress.sh](linux/zipCompress.sh): Compressing files and folders into ZIP archives, explained [here](https://thomasweise.github.io/posts/2026-03-19-compressing-files-and-directories-into-zip-archives), and
+- Setup scripts for installing rootless Docker in China, as explained [here](https://thomasweise.github.io/posts/2026-11-17-installing-rootless-docker-on-ubuntu-in-china).
 
 
 ## 3. License
