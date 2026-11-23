@@ -21,6 +21,7 @@ All scripts are for Ubuntu Linux.
 - [pdfAddOcrLayer.sh](linux/pdfAddOcrLayer.sh): Adding an OCR-based text layer to a PDF or on top of an image, explained [here](https://thomasweise.github.io/posts/2026-08-20-adding-an-ocr-text-layer-to-a-pdf-document),
 - [runWithLimits.sh](linux/runWithLimits.sh): Limiting the memory and CPU cores of a command, explained [here](https://thomasweise.github.io/posts/2026-03-25-limiting-the-memory-and-cpu-cores-of-a-command),
 - [scalePdf.sh](linux/scalePdf.sh): (Down-)Scaling the images in a PDF, explained [here](https://thomasweise.github.io/posts/2026-03-21-downscaling-images-in-pdf-documents),
+- [shutDown.sh](linux/shutDown.sh): Shut down the computer after running [update.sh](linux/update.sh) (uses the internal script [__shutDown.sh](linux/__shutDown.sh)),
 - [tryForever.sh](linux/tryForever.sh): Repeating a command until it succeeds, explained [here](https://thomasweise.github.io/posts/2026-03-09-repeating-until-success-linux), 
 - [update.sh](linux/update.sh): Updating all packages and snaps, explained [here](https://thomasweise.github.io/posts/2026-03-10-updating-packages-and-snaps-linux),
 - [vec2vec.sh](linux/vec2vec.sh): Converting among vector graphics formats, explained [here](https://thomasweise.github.io/posts/2026-03-23-converting-vector-graphics-formats),
@@ -32,7 +33,7 @@ All scripts are for Ubuntu Linux.
 ## 3. License
 Copyright (C) 2026  [Thomas Weise](https://thomasweise.github.io) (汤卫思教授)
 
-Dr. [Thomas Weise](https://thomasweise.github.io) (see [Contact](#12-contact)) holds the copyright of these scripts.
+Dr. [Thomas Weise](https://thomasweise.github.io) (see [Contact](#4-contact)) holds the copyright of these scripts.
 The scripts are provided to the public as open source software under the [GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007](https://thomasweise.github.io/moptipy/LICENSE.html).
 
 All scripts and programs here are free software: you can redistribute them and/or modify them under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
