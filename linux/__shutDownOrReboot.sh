@@ -28,5 +28,5 @@ echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Update script has returned (return value $
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for 60s, just in case."
 sleep 60s
 
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now invoking $cmd."
-sudo systemctl "$cmd" -i
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now invoking $command."
+sudo systemctl "$command" -i
