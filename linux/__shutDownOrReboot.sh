@@ -7,7 +7,8 @@ set -o nounset   # set -u : exit the script if you try to use an uninitialized v
 set -o errexit   # set -e : exit the script if any statement returns a non-true return value
 
 scriptDir="$1"
-delay="${2:-}"
+command="$2"
+delay="${3:-}"
 if [[ -n "$delay" ]]; then
   echo "$(date +'%0Y-%0m-%0d %0R:%0S'): A delay of '$delay' was specified."
 else
@@ -27,5 +28,5 @@ echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Update script has returned (return value $
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now sleeping for 60s, just in case."
 sleep 60s
 
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now shutting down."
-sudo systemctl poweroff -i
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Now invoking $cmd."
+sudo systemctl "$cmd" -i

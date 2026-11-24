@@ -21,7 +21,7 @@ All scripts are for Ubuntu Linux.
 - [pdfAddOcrLayer.sh](linux/pdfAddOcrLayer.sh): Adding an OCR-based text layer to a PDF or on top of an image, explained [here](https://thomasweise.github.io/posts/2026-08-20-adding-an-ocr-text-layer-to-a-pdf-document),
 - [runWithLimits.sh](linux/runWithLimits.sh): Limiting the memory and CPU cores of a command, explained [here](https://thomasweise.github.io/posts/2026-03-25-limiting-the-memory-and-cpu-cores-of-a-command),
 - [scalePdf.sh](linux/scalePdf.sh): (Down-)Scaling the images in a PDF, explained [here](https://thomasweise.github.io/posts/2026-03-21-downscaling-images-in-pdf-documents),
-- [shutDown.sh](linux/shutDown.sh): Shut down the computer after running [update.sh](linux/update.sh) (uses the internal script [__shutDown.sh](linux/__shutDown.sh)),
+- [shutDown.sh](linux/shutDown.sh): Shut down the computer after running [update.sh](linux/update.sh) (uses the internal script [__shutDownOrReboot.sh](linux/__shutDown.sh)),
 - [tryForever.sh](linux/tryForever.sh): Repeating a command until it succeeds, explained [here](https://thomasweise.github.io/posts/2026-03-09-repeating-until-success-linux), 
 - [update.sh](linux/update.sh): Updating all packages and snaps, explained [here](https://thomasweise.github.io/posts/2026-03-10-updating-packages-and-snaps-linux),
 - [vec2vec.sh](linux/vec2vec.sh): Converting among vector graphics formats, explained [here](https://thomasweise.github.io/posts/2026-03-23-converting-vector-graphics-formats),

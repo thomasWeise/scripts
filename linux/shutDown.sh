@@ -15,6 +15,6 @@ scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): This script is in directory '$scriptDir', where we also will look for other scripts."
 
 delay="${1:-}"
-sudo "$scriptDir/__shutDown.sh" "$scriptDir" "$delay"
+sudo "$scriptDir/__shutDownOrReboot.sh" "$scriptDir" "poweroff" "$delay"
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Shutdown is initiated. Goodbye, sweet dreams."
