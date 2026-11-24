@@ -11,8 +11,8 @@ delay="${2:-}"
 if [[ -n "$delay" ]]; then
   echo "$(date +'%0Y-%0m-%0d %0R:%0S'): A delay of '$delay' was specified."
 else
-  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The default delay of '$delay' will be used."
   delay="60s"
+  echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The default delay of '$delay' will be used."
 fi
 sleep "${delay}"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Finished waiting for '$delay', now shutting down."
