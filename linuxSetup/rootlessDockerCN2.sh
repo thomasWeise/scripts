@@ -33,8 +33,9 @@ tee ~/.config/docker/daemon.json <<-'EOF'
     "https://docker.m.daocloud.io",
     "https://hub.rat.dev"
   ],
-  "no-new-privileges": false,
-  "max-concurrent-downloads": 1
+  "max-concurrent-downloads": 1,
+  "max-download-attempts": 64,
+  "no-new-privileges": false
 }
 EOF
 
